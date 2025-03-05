@@ -43,7 +43,12 @@ public class OrderService {
 
     // 7.5.2.4 Delete Order by ID
     public void deleteOrderById ( @PathVariable UUID orderId) {
-        orderRepository.deleteOrderById(orderId);
+        Order order = orderRepository.getOrderById(orderId);
+        if (order != null) {
+            orderRepository.deleteOrderById(orderId);
+        } else {
+            throw new IllegalArgumentException("Order not found");
+        }
     }
 
 }

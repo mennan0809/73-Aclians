@@ -38,9 +38,14 @@ public class OrderController {
     }
 
     // 8.4.2.4 Delete a Specific Order
-    @DeleteMapping("/{orderId}")
-    public void deleteOrderById(@PathVariable UUID orderId){
-        orderService.deleteOrderById(orderId);
+    @DeleteMapping("/delete/{orderId}")
+    public String deleteOrderById(@PathVariable UUID orderId){
+        try {
+            orderService.deleteOrderById(orderId);
+            return "Order deleted successfully";
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
+        }
     }
 
 }

@@ -53,12 +53,12 @@ public class OrderRepository extends MainRepository<Order> {
 
     @Override
     protected String getDataPath() {
-        return "";
+        return "src/main/java/com/example/data/orders.json";
     }
 
     @Override
     protected Class<Order[]> getArrayType() {
-        return null;
+        return Order[].class;
     }
 
     public void removeOrder(Order order) {

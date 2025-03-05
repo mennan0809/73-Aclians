@@ -81,6 +81,7 @@ public class CartRepository extends MainRepository<Cart> {
             if (cart.getId().equals(cartId)) {
                 carts.remove(cart);
                 overrideData(carts); // Save updated data
+                return;
             }
         }
     }
