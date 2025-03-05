@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Repository
@@ -27,13 +28,14 @@ public class ProductRepository extends MainRepository<Product> {
     public Product addProduct(Product product){
         ArrayList<Product> products = findAll();
         products.add(product);
-        overrideData(products); // Save updated data
+        overrideData(products);
         return product;
     };
 
     public ArrayList<Product> getProducts(){
         return findAll();
     };
+
     public Product getProductById(UUID productId){
 
         ArrayList<Product> products = findAll();
@@ -50,7 +52,7 @@ public class ProductRepository extends MainRepository<Product> {
             if (product.getId().equals(productId)) {
                 product.setName(newName);
                 product.setPrice(newPrice);
-                overrideData(products); // Save updated data
+                overrideData(products);
                 return product;
             }
         }
@@ -73,9 +75,12 @@ public class ProductRepository extends MainRepository<Product> {
             if (product.getId().equals(productId)) {
                 products.remove(product);
                 overrideData(products);
+                saveAll(products);
                 return;
             }
         }
+        throw new NoSuchElementException("Product with ID " + productId + " not found");
+
     };
 
 }
