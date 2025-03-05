@@ -1,7 +1,10 @@
 package com.example.service;
 
+import com.example.model.Cart;
+import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.Order;
+import com.example.repository.CartRepository;
 import com.example.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,13 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CartRepository cartRepository;
+    private final CartService cartService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CartRepository cartRepository, CartService cartService) {
         this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
+        this.cartService = cartService;
     }
 
     public User addUser(User user) {
@@ -35,22 +42,36 @@ public class UserService {
         return userRepository.getOrdersByUserId(userId);
     }
 
-    public void addOrderToUser(UUID userId, Order order) {
-        userRepository.addOrderToUser(userId, order);
+    public void addOrderToUser(UUID userId) {
+        Cart cart = cartService.getCartByUserId(userId);
+
+        if (cart == null || cart.getProducts().isEmpty()) {
+            return;
+        }
+        System.out.println(cart);
+        double price = 0.0;
+        for (Product product : cart.getProducts()) {
+            price += product.getPrice();
+        }
+
+        Order newOrder = new Order(userId, price, cart.getProducts());
+
+        userRepository.addOrderToUser(userId, newOrder);
+
+        emptyCart(userId);
     }
 
     public void emptyCart(UUID userId) {
-        User user = userRepository.getUserById(userId);
-        if (user != null) {
-            user.getOrders().clear();
-            userRepository.deleteUserById(userId); // Remove the old user
-            userRepository.addUser(user); // Save the updated user
+        Cart cart = cartService.getCartByUserId(userId);
+        for(Product product : cart.getProducts()) {
+            cartService.deleteProductFromCart(cart.getId(), product);
         }
     }
 
-//    public void removeOrderFromUser(UUID userId, UUID orderId) {
-//        userRepository.removeOrderFromUser(userId, orderId);
-//    }
+
+    public void removeOrderFromUser(UUID userId, UUID orderId) {
+        userRepository.removeOrderFromUser(userId, orderId);
+    }
 
     public void deleteUserById(UUID userId) {
         userRepository.deleteUserById(userId);

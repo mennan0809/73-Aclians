@@ -21,7 +21,12 @@ public class Order {
     public Order () {
         this.id = UUID.randomUUID();
     }
-
+    public Order(UUID id, UUID userId, double totalPrice, List<Product> products) {
+        this.id = id;
+        this.userId = userId;
+        this.totalPrice = totalPrice;
+        this.products = products;
+    }
     // Kol El Getters
     public UUID getId() {
         return id;
