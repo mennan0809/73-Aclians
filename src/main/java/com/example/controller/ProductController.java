@@ -38,8 +38,8 @@ public class ProductController {
     @PutMapping("/update/{productId}")
     public Product updateProduct(@PathVariable UUID productId, @RequestBody Map<String,Object>
             body){
-        String newName = (String) body.get("name");
-        Double newPrice = body.get("price") != null ? ((Number) body.get("price")).doubleValue() : null;
+        String newName = (String) body.get("newName");
+        Double newPrice = body.get("newPrice") != null ? ((Double) body.get("newPrice")):null;
 
         return productService.updateProduct(productId,newName,newPrice);
     };
@@ -55,10 +55,9 @@ public class ProductController {
             return "No product IDs provided.";
         }
 
-        // Apply discount
         productService.applyDiscount(discount, productIds);
 
-        return "Discount of " + discount + "% applied to selected products.";
+        return "Discount applied successfully";
     };
 
     @DeleteMapping("/delete/{productId}")
@@ -69,10 +68,9 @@ public class ProductController {
             return "Product with ID " + productId + " not found.";
         }
 
-        // Perform deletion
         productService.deleteProductById(productId);
 
-        return "Product with ID " + productId + " has been deleted successfully.";
+        return "Product deleted successfully";
     };
 
 }
