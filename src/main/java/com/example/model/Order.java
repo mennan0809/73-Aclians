@@ -2,6 +2,7 @@ package com.example.model;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 @Component
@@ -53,5 +54,12 @@ public class Order {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Same reference
+        if (obj == null || getClass() != obj.getClass()) return false; // Different class
 
+        Order order = (Order) obj;
+        return Objects.equals(id, order.id); // Compare IDs (assuming it's unique)
+    }
 }

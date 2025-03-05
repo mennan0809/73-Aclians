@@ -5,6 +5,7 @@ import com.example.model.Product;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Repository
@@ -75,15 +76,18 @@ public class CartRepository extends MainRepository<Cart> {
         }
     }
 
-    public void deleteCartById(UUID cartId){
+    public void deleteCartById(UUID cartId) {
         ArrayList<Cart> carts = findAll();
-        for (Cart cart : carts) {
-            if (cart.getId().equals(cartId)) {
-                carts.remove(cart);
-                overrideData(carts); // Save updated data
+        for (int i = 0; i < carts.size(); i++) {
+            if (carts.get(i).getId().equals(cartId)) {
+                carts.remove(i);
+                overrideData(carts);
                 return;
             }
         }
+        throw new NoSuchElementException("Cart with ID " + cartId + " not found");
+
     }
+
 
 }

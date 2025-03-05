@@ -15,6 +15,10 @@ public class OrderRepository extends MainRepository<Order> {
      super();
     }
 
+    public ArrayList<Order> getOrders() {
+        return findAll();
+    }
+
     // 6.5.2.1 Add Order
     public void addOrder(Order order) {
         ArrayList<Order> allOrders = findAll();
@@ -50,6 +54,7 @@ public class OrderRepository extends MainRepository<Order> {
             saveAll(allOrders);
         }
     }
+
 
     @Override
     protected String getDataPath() {
