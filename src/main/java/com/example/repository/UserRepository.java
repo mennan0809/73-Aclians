@@ -1,8 +1,11 @@
 package com.example.repository;
 
+import com.example.model.Cart;
 import com.example.model.User;
 import com.example.model.Order;
+import com.example.service.CartService;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.UUID;
 @SuppressWarnings("rawtypes")
 public class UserRepository extends MainRepository<User> {
     public static List<User> users = new ArrayList<>();
+    private final CartService cartService;
 
-    public UserRepository() {
+    public UserRepository(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @Override
@@ -58,27 +63,31 @@ public class UserRepository extends MainRepository<User> {
         ArrayList<User> users = findAll();
         for (User user : users) {
             if (user.getId().equals(userId)) {
-                user.getOrders().add(order);
+                List<Order> orders = user.getOrders();
+                orders.add(order);
+                user.setOrders(orders);
+                save(user);
                 overrideData(users);
+                saveAll(users);
                 return;
             }
         }
     }
 
-//    public void removeOrderFromUser(UUID userId, UUID orderId) {
-//        ArrayList<User> users = findAll();
-//        for (User user : users) {
-//            if (user.getId().equals(userId)) {
-//                for(Order order : user.getOrders()){
-//                    if(order.getId().equals(orderId)){
-//                        user.getOrders().remove(order);
-//                        overrideData(users);
-//                        return;
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public void removeOrderFromUser(UUID userId, UUID orderId) {
+        ArrayList<User> users = findAll();
+        for (User user : users) {
+            if (user.getId().equals(userId)) {
+                for(Order order : user.getOrders()){
+                    if(order.getId().equals(orderId)){
+                        user.getOrders().remove(order);
+                        overrideData(users);
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
     public void deleteUserById(UUID userId) {
         ArrayList<User> users = findAll();

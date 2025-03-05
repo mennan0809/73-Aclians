@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Component
@@ -14,6 +15,7 @@ public class User {
 
     public User() {
         this.id = UUID.randomUUID();
+        this.orders = new ArrayList<>();
     }
     public User(String name) {
         this.id = UUID.randomUUID();
@@ -58,5 +60,12 @@ public class User {
                 ", name='" + name + '\'' +
                 ", orders=" + orders +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(this.id, user.id) && Objects.equals(this.name, user.name);
     }
 }
