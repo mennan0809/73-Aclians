@@ -26,7 +26,16 @@ public class ProductRepository extends MainRepository<Product> {
     }
 
     public Product addProduct(Product product){
+
         ArrayList<Product> products = findAll();
+        for (Product p : products){
+            if (p.getId().equals(product.getId())){
+                throw new IllegalArgumentException("Product with this ID already exists");
+            }
+            if(p.getName().equals(product.getName())){
+                throw new IllegalArgumentException("Product with this name already exists");
+            }
+        }
         products.add(product);
         overrideData(products);
         return product;
@@ -60,6 +69,11 @@ public class ProductRepository extends MainRepository<Product> {
     };
     public void applyDiscount(double discount, ArrayList<UUID> productIds){
         ArrayList<Product> products = findAll();
+        for (UUID id : productIds) {
+            if(getProductById(id) == null){
+                throw new NoSuchElementException("Product with id " + id + " not found");
+            }
+        }
         for (Product product : products) {
             if (productIds.contains(product.getId())) {
                 double discountedPrice = product.getPrice() * (1 - discount / 100);

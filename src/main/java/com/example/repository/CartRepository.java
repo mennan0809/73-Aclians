@@ -26,6 +26,9 @@ public class CartRepository extends MainRepository<Cart> {
     }
 
     public Cart addCart(Cart cart) {
+        if(cart==null||cart.getId()==null||cart.getUserId()==null){
+            throw new NullPointerException("cart or cartId is null");
+        }
         ArrayList<Cart> carts = findAll();
         carts.add(cart);
         overrideData(carts); // Save updated data

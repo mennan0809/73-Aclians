@@ -22,6 +22,13 @@ public class OrderRepository extends MainRepository<Order> {
 
     // 6.5.2.1 Add Order
     public void addOrder(Order order) {
+        if (order == null) {
+            throw new NullPointerException("Order is null");
+        }
+
+        if (getOrderById(order.getId()) != null) {
+            throw new IllegalArgumentException("Order with this ID already exists");
+        }
         ArrayList<Order> allOrders = findAll();
         allOrders.add(order);
         saveAll(allOrders);

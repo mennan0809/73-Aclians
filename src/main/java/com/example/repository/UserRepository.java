@@ -47,6 +47,12 @@ public class UserRepository extends MainRepository<User> {
     }
 
     public User addUser(User user) {
+        ArrayList<User> users = findAll();
+        for (User u : users) {
+            if (u.getId().equals(user.getId())) {
+                throw new NoSuchElementException("User with ID " + user.getId() + " already exists");
+            }
+        }
         save(user);
         return user;
     }
