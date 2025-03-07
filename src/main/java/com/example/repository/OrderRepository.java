@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.example.repository.MainRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 @Repository
 @SuppressWarnings("rawtypes")
@@ -52,6 +53,10 @@ public class OrderRepository extends MainRepository<Order> {
         if (order != null) {
             allOrders.remove(order);
             saveAll(allOrders);
+            return;
+        }
+        else{
+            throw new NoSuchElementException("Order with id " + id + " not found");
         }
     }
 
@@ -67,9 +72,15 @@ public class OrderRepository extends MainRepository<Order> {
     }
 
     public void removeOrder(Order order) {
-        ArrayList<Order> allOrders = findAll();
-        allOrders.remove(order);
-        saveAll(allOrders);
+        if(getOrderById(order.getId()) != null) {
+            ArrayList<Order> allOrders = findAll();
+            allOrders.remove(order);
+            saveAll(allOrders);
+            return;
+        }
+        else{
+            throw new NoSuchElementException("Order with id " + order.getId() + " not found");
+        }
     }
 
 

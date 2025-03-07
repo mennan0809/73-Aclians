@@ -56,7 +56,7 @@ public class ProductRepository extends MainRepository<Product> {
                 return product;
             }
         }
-        return null;
+        throw new NoSuchElementException("Product with id " + productId + " not found");
     };
     public void applyDiscount(double discount, ArrayList<UUID> productIds){
         ArrayList<Product> products = findAll();

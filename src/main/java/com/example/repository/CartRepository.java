@@ -61,7 +61,7 @@ public class CartRepository extends MainRepository<Cart> {
         for (Cart cart : carts) {
             if (cart.getId().equals(cartId)) {
                 cart.getProducts().add(product);
-                overrideData(carts); // Save updated data
+                overrideData(carts);
             }
         }
     }
@@ -71,9 +71,11 @@ public class CartRepository extends MainRepository<Cart> {
         for (Cart cart : carts) {
             if (cart.getId().equals(cartId)) {
                 cart.getProducts().remove(product);
-                overrideData(carts); // Save updated data
+                overrideData(carts);
+                return;
             }
         }
+        throw new NoSuchElementException("product not found in the cart");
     }
 
     public void deleteCartById(UUID cartId) {

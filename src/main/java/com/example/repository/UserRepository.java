@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Repository
@@ -87,6 +88,7 @@ public class UserRepository extends MainRepository<User> {
                 }
             }
         }
+        throw new NoSuchElementException("Order with id " + orderId + " not found");
     }
 
     public void deleteUserById(UUID userId) {
@@ -98,5 +100,6 @@ public class UserRepository extends MainRepository<User> {
                 return;
             }
         }
+        throw new NoSuchElementException("User with id " + userId + " not found");
     }
 }
