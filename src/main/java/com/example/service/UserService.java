@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -62,12 +63,17 @@ public class UserService {
     }
 
     public void emptyCart(UUID userId) {
+        if(getUserById(userId) == null) {
+            throw new NoSuchElementException("User with id " + userId + " does not exist");
+        }
         Cart cart = cartService.getCartByUserId(userId);
+        if(cart == null) {
+            throw new IllegalArgumentException("user doesn't have any cart");
+        }
         for(Product product : cart.getProducts()) {
             cartService.deleteProductFromCart(cart.getId(), product);
         }
     }
-
 
     public void removeOrderFromUser(UUID userId, UUID orderId) {
         userRepository.removeOrderFromUser(userId, orderId);

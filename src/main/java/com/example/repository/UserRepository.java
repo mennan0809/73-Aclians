@@ -63,7 +63,7 @@ public class UserRepository extends MainRepository<User> {
     public List<Order> getOrdersByUserId(UUID userId) {
         User user = getUserById(userId);
         if(user == null){
-            return null;
+            throw new NoSuchElementException("User with ID " + userId + " does not exist");
         } else{
             return user.getOrders();
         }
@@ -82,9 +82,13 @@ public class UserRepository extends MainRepository<User> {
                 return;
             }
         }
+        throw new NoSuchElementException("User with ID " + userId + " does not exist");
     }
 
     public void removeOrderFromUser(UUID userId, UUID orderId) {
+        if(getUserById(userId) == null){
+            throw new NoSuchElementException("User with ID " + userId + " does not exist");
+        }
         ArrayList<User> users = findAll();
         for (User user : users) {
             if (user.getId().equals(userId)) {
