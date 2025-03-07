@@ -47,6 +47,9 @@ public class UserRepository extends MainRepository<User> {
     }
 
     public User addUser(User user) {
+        if(user.getName().isEmpty() ||user.getName().equals(" ")){
+            throw new IllegalArgumentException("User name cannot be empty");
+        }
         ArrayList<User> users = findAll();
         for (User u : users) {
             if (u.getId().equals(user.getId())) {

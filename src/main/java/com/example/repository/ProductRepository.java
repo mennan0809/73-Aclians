@@ -26,7 +26,9 @@ public class ProductRepository extends MainRepository<Product> {
     }
 
     public Product addProduct(Product product){
-
+        if(product.getName().isEmpty() ||product.getName().equals(" ")){
+            throw new IllegalArgumentException("product name cannot be empty");
+        }
         ArrayList<Product> products = findAll();
         for (Product p : products){
             if (p.getId().equals(product.getId())){
@@ -56,6 +58,9 @@ public class ProductRepository extends MainRepository<Product> {
         return null;
     };
     public Product updateProduct(UUID productId, String newName, double newPrice){
+        if(newName.isEmpty() ||newName.equals(" ")){
+            throw new IllegalArgumentException("product name cannot be empty");
+        }
         ArrayList<Product> products = findAll();
         for (Product product : products) {
             if (product.getId().equals(productId)) {
