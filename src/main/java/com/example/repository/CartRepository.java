@@ -29,6 +29,9 @@ public class CartRepository extends MainRepository<Cart> {
         if(cart==null||cart.getId()==null||cart.getUserId()==null){
             throw new NullPointerException("cart or cartId is null");
         }
+        if(getCartByUserId(cart.getUserId())!=null){
+            throw new IllegalArgumentException("User already has one cart");
+        }
         ArrayList<Cart> carts = findAll();
         carts.add(cart);
         overrideData(carts); // Save updated data
@@ -60,6 +63,12 @@ public class CartRepository extends MainRepository<Cart> {
     }
 
     public void addProductToCart(UUID cartId, Product product){
+        if(cartId==null||product==null){
+            throw new NullPointerException("cart or product is null");
+        }
+        if(getCartById(cartId)==null){
+            throw new NoSuchElementException("cart doesn't exist");
+        }
         ArrayList<Cart> carts = findAll();
         for (Cart cart : carts) {
             if (cart.getId().equals(cartId)) {
@@ -70,6 +79,12 @@ public class CartRepository extends MainRepository<Cart> {
     }
 
     public void deleteProductFromCart(UUID cartId, Product product){
+        if(cartId==null||product==null){
+            throw new NullPointerException("cart or product is null");
+        }
+        if(getCartById(cartId)==null){
+            throw new NoSuchElementException("cart doesn't exist");
+        }
         ArrayList<Cart> carts = findAll();
         for (Cart cart : carts) {
             if (cart.getId().equals(cartId)) {

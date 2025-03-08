@@ -16,10 +16,10 @@ import java.util.UUID;
 @SuppressWarnings("rawtypes")
 public class UserRepository extends MainRepository<User> {
     public static List<User> users = new ArrayList<>();
-    private final CartService cartService;
 
-    public UserRepository(CartService cartService) {
-        this.cartService = cartService;
+
+    public UserRepository() {
+
     }
 
     @Override

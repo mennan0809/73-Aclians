@@ -26,7 +26,11 @@ public class ProductRepository extends MainRepository<Product> {
     }
 
     public Product addProduct(Product product){
-        if(product.getName().isEmpty() ||product.getName().equals(" ")){
+        if(product==null){
+            throw new NoSuchElementException("Product is null");
+        }
+
+        if(product.getName()==null||product.getName().isEmpty() ||product.getName().equals(" ")){
             throw new IllegalArgumentException("product name cannot be empty");
         }
         ArrayList<Product> products = findAll();
@@ -58,7 +62,7 @@ public class ProductRepository extends MainRepository<Product> {
         return null;
     };
     public Product updateProduct(UUID productId, String newName, double newPrice){
-        if(newName.isEmpty() ||newName.equals(" ")){
+        if(newName==null||newName.isEmpty() ||newName.equals(" ")){
             throw new IllegalArgumentException("product name cannot be empty");
         }
         ArrayList<Product> products = findAll();
