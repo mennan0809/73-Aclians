@@ -1,1 +1,1 @@
-[{"id":"8766293b-e6bd-4315-ba85-edc028a7b8f0","name":"Test User18","orders":[]}]
+[{"id":"8c3de594-9e4d-4a43-8485-a1a36b49953d","name":"Test User","orders":[{"id":"3625522d-7977-4a61-b462-cdd92f58dfb9","userId":"8c3de594-9e4d-4a43-8485-a1a36b49953d","totalPrice":75.0,"products":[{"id":"931779b2-7852-43d2-931e-191e56aa340f","name":"Product 2","price":75.0}]}]}]

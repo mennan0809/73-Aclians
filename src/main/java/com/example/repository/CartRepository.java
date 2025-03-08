@@ -88,6 +88,9 @@ public class CartRepository extends MainRepository<Cart> {
         ArrayList<Cart> carts = findAll();
         for (Cart cart : carts) {
             if (cart.getId().equals(cartId)) {
+                if(!cart.getProducts().contains(product)){
+                    throw new NoSuchElementException("product doesn't exist in Cart");
+                }
                 cart.getProducts().remove(product);
                 overrideData(carts);
                 return;
