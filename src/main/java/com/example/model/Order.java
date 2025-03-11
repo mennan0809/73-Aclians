@@ -12,7 +12,6 @@ public class Order {
     private double totalPrice;
     private List<Product> products=new ArrayList<>();
 
-    // Constructors
     public Order(UUID userId, double totalPrice, List<Product> products) {
         this.id = UUID.randomUUID();
         this.userId = userId;
@@ -28,7 +27,6 @@ public class Order {
         this.totalPrice = totalPrice;
         this.products = products;
     }
-    // Kol El Getters
     public UUID getId() {
         return id;
     }
@@ -41,7 +39,6 @@ public class Order {
     public List<Product> getProducts() {
         return products;
     }
-    // Kol El Setters
     public void setId(UUID id) {
         this.id = id;
     }
@@ -56,10 +53,10 @@ public class Order {
     }
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Same reference
-        if (obj == null || getClass() != obj.getClass()) return false; // Different class
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
         Order order = (Order) obj;
-        return Objects.equals(id, order.id); // Compare IDs (assuming it's unique)
+        return Objects.equals(id, order.id);
     }
 }

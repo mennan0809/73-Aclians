@@ -20,7 +20,6 @@ public class OrderRepository extends MainRepository<Order> {
         return findAll();
     }
 
-    // 6.5.2.1 Add Order
     public void addOrder(Order order) {
         if (order == null) {
             throw new NullPointerException("Order is null");
@@ -33,7 +32,6 @@ public class OrderRepository extends MainRepository<Order> {
         allOrders.add(order);
         saveAll(allOrders);
     }
-    // 6.5.2.2 Get Order
     public Order getOrder(UUID id) {
         ArrayList<Order> allOrders = findAll();
         for (Order order : allOrders) {
@@ -43,7 +41,6 @@ public class OrderRepository extends MainRepository<Order> {
         }
         return null;
     }
-    // 6.5.2.3 Get Order by ID
     public Order getOrderById(UUID id) {
         ArrayList<Order> allOrders = findAll();
         for (Order order : allOrders) {
@@ -53,7 +50,6 @@ public class OrderRepository extends MainRepository<Order> {
         }
         return null;
     }
-    // 6.5.2.4 Delete Order by ID
     public void deleteOrderById(UUID id) {
         ArrayList<Order> allOrders = findAll();
         Order order = getOrderById(id);
