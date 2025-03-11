@@ -4,6 +4,7 @@ import com.example.model.Cart;
 import com.example.model.User;
 import com.example.model.Order;
 import com.example.service.CartService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,9 +23,12 @@ public class UserRepository extends MainRepository<User> {
 
     }
 
+    @Value("${spring.application.userDataPath}")
+    private String userDataPath;
+
     @Override
     protected String getDataPath() {
-        return "src/main/java/com/example/data/users.json";
+        return userDataPath;
     }
 
     @Override
